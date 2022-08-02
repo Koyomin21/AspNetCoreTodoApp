@@ -11,8 +11,8 @@ using TodoDLA;
 namespace TodoDLA.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220729113902_addedRoles")]
-    partial class addedRoles
+    [Migration("20220802090746_seedUsersRoles")]
+    partial class seedUsersRoles
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -105,6 +105,29 @@ namespace TodoDLA.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "anuar@mail.ru",
+                            Password = "$2a$11$3rIpoh7LuzD.tCnAM2GVVO9NghLztrHIV1edwphFPwPypvFu5xpqS",
+                            RoleId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "elvira@mail.ru",
+                            Password = "$2a$11$Xl02pDNbo1xgjyMYXEEv0.4gz.p59Rg4o1l/3BXz82KRSQV0sqPkO",
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Email = "aldik@mail.ru",
+                            Password = "$2a$11$4DPFwxNAMWHPyrAsOgQFyeGA0TTysofMulPmFvflM7zX9y2zW3i42",
+                            RoleId = 2
+                        });
                 });
 
             modelBuilder.Entity("TodoDLA.Models.Todo", b =>

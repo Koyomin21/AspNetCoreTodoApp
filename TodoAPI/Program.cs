@@ -16,6 +16,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("MainConnection"));
+    
 });
 
 builder.Services.AddAutoMapper(typeof(Program));

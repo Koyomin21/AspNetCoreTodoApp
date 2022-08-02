@@ -13,5 +13,6 @@ namespace TodoDLA.Models
 
         public IEnumerable<Todo> Todos { get; set; }
         public Role Role { get; set;}
+        public int RoleId {get; set;}
     }
 }

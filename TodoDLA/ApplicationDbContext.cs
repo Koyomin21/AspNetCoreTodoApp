@@ -2,14 +2,15 @@
 using Microsoft.EntityFrameworkCore;
 using TodoDLA.Models;
 using TodoDLA.Enums;
+using TodoDLA.Extensions;
 
 namespace TodoDLA;
 public class ApplicationDbContext : DbContext
 {
-    // public ApplicationDbContext(){}
+    public ApplicationDbContext(){}
     // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     // {
-    //     optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=TodosDb;User ID=postgres;Password=anuar123;");
+    //     optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=TodoAppDb;User ID=postgres;Password=anuar123;");
     // }
     public ApplicationDbContext(DbContextOptions options) : base(options)
     {
@@ -25,6 +26,10 @@ public class ApplicationDbContext : DbContext
         .HasMany(u => u.Todos)
         .WithOne(t => t.User);
 
+        modelBuilder.Entity<User>()
+        .HasOne(u => u.Role)
+        .WithMany(r => r.Users);
+
         modelBuilder.Entity<Role>()
         .HasMany(r => r.Users)
         .WithOne(u => u.Role);
@@ -33,15 +38,9 @@ public class ApplicationDbContext : DbContext
         .Property(r => r.Name)
         .HasConversion<string>();
 
-        // seeding roles
-        List<Role> roles = new List<Role>();
-        foreach(int i in Enum.GetValues(typeof(RoleType)))
-        {
-            roles.Add(new Role() { Id = i,  Name = (RoleType)i });
-        }
-        modelBuilder.Entity<Role>()
-        .HasData(roles);
-        
+        modelBuilder.SeedRoles();
+        modelBuilder.SeedUsers();
+
         
     }
 }

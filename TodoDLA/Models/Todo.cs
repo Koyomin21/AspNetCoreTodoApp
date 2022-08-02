@@ -10,7 +10,7 @@ namespace TodoDLA.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public Boolean isCompleted { get; set; }
+        public Boolean isCompleted { get; set; } = false;
         public User User { get; set; }
     }
 }
