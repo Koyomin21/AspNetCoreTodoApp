@@ -11,6 +11,8 @@ namespace TodoDLA.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public Boolean isCompleted { get; set; } = false;
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+
         public User User { get; set; }
     }
 }

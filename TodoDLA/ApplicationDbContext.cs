@@ -7,11 +7,11 @@ using TodoDLA.Extensions;
 namespace TodoDLA;
 public class ApplicationDbContext : DbContext
 {
-    public ApplicationDbContext(){}
+    // public ApplicationDbContext(){}
     // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     // {
     //     optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=TodoAppDb;User ID=postgres;Password=anuar123;");
-    // }
+    // }    
     public ApplicationDbContext(DbContextOptions options) : base(options)
     {
     }

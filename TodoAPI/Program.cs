@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using TodoDLA;
 using AutoMapper;
 using TodoAPI.Services;
+using TodoAPI.Configurations;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,15 +13,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+// Service Extensions
+builder.Services.ConfigureDbContext(builder.Configuration.GetConnectionString("MainConnection"));
+builder.Services.ConfigureServices();
+builder.Services.ConfigureAutoMapper();
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-{
-    options.UseNpgsql(builder.Configuration.GetConnectionString("MainConnection"));
-    
-});
 
-builder.Services.AddAutoMapper(typeof(Program));
-builder.Services.AddScoped<ITodoService, TodoService>();
 
 var app = builder.Build();
 
