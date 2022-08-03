@@ -1,3 +1,4 @@
+using System.Text;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,7 +6,8 @@ using System.Threading.Tasks;
 using TodoDLA;
 using Microsoft.EntityFrameworkCore;
 using TodoAPI.Services;
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace TodoAPI.Configurations
 {
@@ -14,6 +16,29 @@ namespace TodoAPI.Configurations
         private static readonly IConfiguration _configuration; 
 
         
+        public static void ConfigureJWTAuthentication(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddAuthentication(x=>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(o => 
+            {
+                var key = Encoding.UTF8.GetBytes(configuration["JWT:Secret"]);
+
+                o.SaveToken = true;
+                o.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = configuration["JWT:Issuer"],
+                    ValidAudience = configuration["JWT:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(key)
+                };
+            });
+        }
         public static void ConfigureDbContext(this IServiceCollection services, string connectionString)
         {
             services.AddDbContext<ApplicationDbContext>(options =>

@@ -17,7 +17,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.ConfigureDbContext(builder.Configuration.GetConnectionString("MainConnection"));
 builder.Services.ConfigureServices();
 builder.Services.ConfigureAutoMapper();
-
+builder.Services.ConfigureJWTAuthentication(builder.Configuration);
 
 var app = builder.Build();
 
@@ -31,6 +31,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
