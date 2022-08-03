@@ -1,21 +1,37 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace TodoDLA.Migrations
 {
-    public partial class AddedCreationDate : Migration
+    public partial class addUserId : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<DateTime>(
-                name: "CreatedAt",
-                table: "Todos",
-                type: "timestamp without time zone",
-                nullable: false,
-                defaultValue: DateTime.Now);
+            migrationBuilder.UpdateData(
+                table: "Users",
+                keyColumn: "Id",
+                keyValue: 1,
+                column: "Password",
+                value: "$2a$11$TBgzr5UyQ2wiwJGtdJJ6COYw3bNGN2Q.LMpgiRJthaJWQYIyrP6UK");
 
+            migrationBuilder.UpdateData(
+                table: "Users",
+                keyColumn: "Id",
+                keyValue: 2,
+                column: "Password",
+                value: "$2a$11$n4nmGaJIbfhVYjsbPq/zd.4xuo8xjd6RoO2PjAlsYEjjpEfNh/ZP.");
+
+            migrationBuilder.UpdateData(
+                table: "Users",
+                keyColumn: "Id",
+                keyValue: 3,
+                column: "Password",
+                value: "$2a$11$uetBdy7Zu0wUVEm/TIy/auSPouarz7Zqau1Q30mzssWrhbtc3DcKS");
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
             migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
@@ -36,34 +52,6 @@ namespace TodoDLA.Migrations
                 keyValue: 3,
                 column: "Password",
                 value: "$2a$11$DtbcoVDCP6LnWXWOGBy0V.KV4KF3LClrJXkB9wzYOxgJHStYF8gDG");
-        }
-
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropColumn(
-                name: "CreatedAt",
-                table: "Todos");
-
-            migrationBuilder.UpdateData(
-                table: "Users",
-                keyColumn: "Id",
-                keyValue: 1,
-                column: "Password",
-                value: "$2a$11$3rIpoh7LuzD.tCnAM2GVVO9NghLztrHIV1edwphFPwPypvFu5xpqS");
-
-            migrationBuilder.UpdateData(
-                table: "Users",
-                keyColumn: "Id",
-                keyValue: 2,
-                column: "Password",
-                value: "$2a$11$Xl02pDNbo1xgjyMYXEEv0.4gz.p59Rg4o1l/3BXz82KRSQV0sqPkO");
-
-            migrationBuilder.UpdateData(
-                table: "Users",
-                keyColumn: "Id",
-                keyValue: 3,
-                column: "Password",
-                value: "$2a$11$4DPFwxNAMWHPyrAsOgQFyeGA0TTysofMulPmFvflM7zX9y2zW3i42");
         }
     }
 }

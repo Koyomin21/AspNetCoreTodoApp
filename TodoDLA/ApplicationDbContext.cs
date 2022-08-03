@@ -1,4 +1,5 @@
-﻿using System.Reflection.Emit;
+﻿using System.Runtime.CompilerServices;
+using System.Reflection.Emit;
 using Microsoft.EntityFrameworkCore;
 using TodoDLA.Models;
 using TodoDLA.Enums;
@@ -37,6 +38,10 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<Role>()
         .Property(r => r.Name)
         .HasConversion<string>();
+
+        modelBuilder.Entity<Todo>()
+        .HasOne(t => t.User)
+        .WithMany(u => u.Todos);
 
         modelBuilder.SeedRoles();
         modelBuilder.SeedUsers();

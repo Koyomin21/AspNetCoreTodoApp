@@ -33,6 +33,6 @@ public class TodoController : ControllerBase
         if(!result.Succeeded)
             return BadRequest(result.Errors);
         
-        return Ok();
+        return Ok(result);
     }
 }
