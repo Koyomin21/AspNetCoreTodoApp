@@ -33,8 +33,8 @@ namespace TodoAPI.Configurations
                     ValidateAudience = false,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = configuration["JWT:Issuer"],
-                    ValidAudience = configuration["JWT:Audience"],
+                    // ValidIssuer = configuration["JWT:Issuer"],
+                    // ValidAudience = configuration["JWT:Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(key)
                 };
             });
@@ -53,6 +53,8 @@ namespace TodoAPI.Configurations
         public static void ConfigureServices(this IServiceCollection services)
         {
             services.AddScoped<ITodoService, TodoService>();
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IUserService, UserService>();
         }
 
         public static void ConfigureAutoMapper(this IServiceCollection services)

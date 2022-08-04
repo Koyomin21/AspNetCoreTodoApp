@@ -11,10 +11,12 @@ namespace TodoAPI.Services
     {
         protected readonly ApplicationDbContext _context;
         protected readonly IMapper _mapper;
-        public BaseService(ApplicationDbContext context, IMapper mapper)
+        protected readonly IConfiguration _configuration;
+        public BaseService(ApplicationDbContext context, IMapper mapper, IConfiguration configuration)
         {
             _context = context;
             _mapper = mapper;
+            _configuration = configuration;
         }
 
     }

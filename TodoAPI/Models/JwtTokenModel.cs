@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TodoAPI.Models
 {
-    public class Token
+    public class JwtTokenModel
     {
         public string Value { get; set; }
     }

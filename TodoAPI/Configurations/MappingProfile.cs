@@ -14,6 +14,9 @@ namespace TodoAPI.Configurations
         {
             CreateMap<Todo, GetTodoDto>();
             CreateMap<CreateTodoDto, Todo>();
+            CreateMap<GetUserDto, User>();
+            CreateMap<User, GetUserDto>()
+            .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role.Name.ToString()));
             
         }
     }

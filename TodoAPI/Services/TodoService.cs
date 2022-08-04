@@ -13,7 +13,8 @@ namespace TodoAPI.Services
 {
     public class TodoService : BaseService, ITodoService
     {
-        public TodoService(ApplicationDbContext context, IMapper mapper) : base(context, mapper)
+        public TodoService(ApplicationDbContext context, IMapper mapper, IConfiguration configuration)
+         : base(context, mapper, configuration)
         {
             
         }

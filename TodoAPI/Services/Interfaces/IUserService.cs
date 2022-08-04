@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 using TodoAPI.Models;
 using TodoAPI.DTOs;
 
-
 namespace TodoAPI.Services
 {
-    public interface ITokenService
+    public interface IUserService
     {
-        Task<ProcessResult<JwtTokenModel>> Authenticate(AuthenticateUserDTO userDTO);
+        Task<ProcessResult<List<GetUserDto>>>GetAllUsers();   
     }
 }
