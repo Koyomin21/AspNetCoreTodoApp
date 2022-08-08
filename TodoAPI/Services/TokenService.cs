@@ -13,31 +13,25 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using TodoDLA.Models;
 
 namespace TodoAPI.Services
 {
     public class TokenService : BaseService, ITokenService
     {
-
-        public TokenService(ApplicationDbContext context, IMapper mapper, IConfiguration configuration) : base(context, mapper, configuration)
+        private readonly IUserService _userService;
+        public TokenService(ApplicationDbContext context, IMapper mapper, IConfiguration configuration, IUserService userService)
+         : base(context, mapper, configuration)
         {
+            _userService = userService;
         }
 
         public async Task <ProcessResult<JwtTokenModel>> Authenticate(AuthenticateUserDTO userDTO)
         {
             Func<Task<JwtTokenModel>> action = async ()=> 
             {
-
-                var user = await _context.Users
-                .AsNoTracking()
-                .Where(u => u.Email == userDTO.Email)
-                .Include(u => u.Role)
-                .FirstOrDefaultAsync();
-
-            
-
-                if(user == null || !BCrypt.Net.BCrypt.Verify(userDTO.Password, user.Password)) 
-                    throw new BadCredentialsException("Wrong username or password!");
+                var user = await _userService.GetUserByEmailAsync(userDTO.Email);
+                VerifyUser(user, userDTO.Password);
                 
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var tokenKey = Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]);
@@ -58,6 +52,13 @@ namespace TodoAPI.Services
             };
 
             return await Process.RunAsync(action);
+            
+        }
+
+        public void VerifyUser(User user, string password)
+        {
+            if(user == null || !BCrypt.Net.BCrypt.Verify(password, user.Password)) 
+                throw new BadCredentialsException("Wrong username or password!");
             
         }
     }

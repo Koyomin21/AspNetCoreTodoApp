@@ -7,6 +7,8 @@ using TodoAPI.DTOs;
 using TodoAPI.Models;
 using TodoDLA;
 using Microsoft.EntityFrameworkCore;
+using TodoDLA.Models;
+using TodoAPI.Exceptions;
 
 namespace TodoAPI.Services
 {
@@ -31,5 +33,18 @@ namespace TodoAPI.Services
 
             return await Process.RunAsync(action);
         }
+
+        public async Task<User> GetUserByEmailAsync(string email)
+        {
+            var user = await _context.Users
+                .AsNoTracking()
+                .Where(u => u.Email == email)
+                .Include(u => u.Role)
+                .FirstOrDefaultAsync();
+            
+            return user;
+        }
+
+       
     }
 }
